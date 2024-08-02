@@ -4,10 +4,8 @@ using Wheelbarrow.Behaviour;
 using Wheelbarrow.Misc;
 using HarmonyLib;
 using LethalLib.Modules;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using CustomItemBehaviourLibrary.Misc;
@@ -18,6 +16,8 @@ namespace Wheelbarrow
     [BepInPlugin(Metadata.GUID,Metadata.NAME,Metadata.VERSION)]
     [BepInDependency("com.sigurd.csync")]
     [BepInDependency("evaisa.lethallib")]
+    [BepInDependency("com.rune580.LethalCompanyInputUtils")]
+    [BepInDependency("com.github.WhiteSpike.CustomItemBehaviourLibrary")]
     public class Plugin : BaseUnityPlugin
     {
         internal static readonly Harmony harmony = new(Metadata.GUID);
@@ -72,6 +72,7 @@ namespace Wheelbarrow
             grabbableObject.itemProperties = wheelbarrowItem;
             grabbableObject.grabbable = true;
             grabbableObject.grabbableToEnemies = true;
+            Utilities.FixMixerGroups(wheelbarrowItem.spawnPrefab);
             NetworkPrefabs.RegisterNetworkPrefab(wheelbarrowItem.spawnPrefab);
 
             TerminalNode infoNode = SetupInfoNode();

@@ -58,7 +58,7 @@ namespace Wheelbarrow.Behaviour
             else Tools.AddGeneralScanNode(objectToAddScanNode: gameObject, header: ITEM_NAME, subText: ITEM_DESCRIPTION);
         }
 
-        protected override string[] SetupWheelbarrowTooltips()
+        protected override string[] SetupContainerTooltips()
         {
             string controlBind = IngameKeybinds.Instance.WheelbarrowKey.GetBindingDisplayString();
             return [$"Drop all items: [{controlBind}]"];

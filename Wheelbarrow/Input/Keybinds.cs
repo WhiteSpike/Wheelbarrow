@@ -74,7 +74,7 @@ namespace Wheelbarrow.Input
             WheelbarrowBehaviour wheelbarrow = localPlayerController.currentlyHeldObjectServer.GetComponent<WheelbarrowBehaviour>();
             if (!wheelbarrow) return;
 
-            wheelbarrow.UpdateWheelbarrowDrop();
+            wheelbarrow.UpdateContainerDrop();
         }
     }
 }

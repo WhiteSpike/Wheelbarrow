@@ -8,8 +8,6 @@ namespace Wheelbarrow.Util
         internal const bool ITEM_SCAN_NODE_DEFAULT = true;
         internal const string ITEM_SCAN_NODE_DESCRIPTION = "Shows a scan node on the item when scanning";
 
-        #region Peeper
-
         internal const string WHEELBARROW_PRICE_KEY = $"{WheelbarrowBehaviour.ITEM_NAME} price";
         internal const int WHEELBARROW_PRICE_DEFAULT = 500;
         internal const string WHEELBARROW_PRICE_DESCRIPTION = $"Price for {WheelbarrowBehaviour.ITEM_NAME}.";
@@ -17,10 +15,6 @@ namespace Wheelbarrow.Util
         internal const string WHEELBARROW_WEIGHT_KEY = "Item weight";
         internal const int WHEELBARROW_WEIGHT_DEFAULT = 15;
         internal const string WHEELBARROW_WEIGHT_DESCRIPTION = "Weight (in lbs)";
-
-        internal const string WHEELBARROW_TWO_HANDED_KEY = "Two Handed Item";
-        internal const bool WHEELBARROW_TWO_HANDED_DEFAULT = false;
-        internal const string WHEELBARROW_TWO_HANDED_DESCRIPTION = "One or two handed item.";
 
         internal const string WHEELBARROW_CONDUCTIVE_KEY = "Conductive";
         internal const bool WHEELBARROW_CONDUCTIVE_DEFAULT = true;
@@ -75,6 +69,5 @@ namespace Wheelbarrow.Util
         internal const string DROP_ALL_ITEMS_WHEELBARROW_DEFAULT_KEYBIND = "<Mouse>/middleButton";
 
         internal static readonly string WHEELBARROW_SCAN_NODE_KEY = string.Format(ITEM_SCAN_NODE_KEY_FORMAT, WheelbarrowBehaviour.ITEM_NAME);
-        #endregion
     }
 }
