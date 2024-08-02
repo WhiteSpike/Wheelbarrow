@@ -53,12 +53,10 @@ namespace Wheelbarrow
             wheelbarrowItem.grabSFX = bundle.LoadAsset<AudioClip>(root + "Grab.ogg");
             wheelbarrowItem.pocketSFX = bundle.LoadAsset<AudioClip>(root + "Pocket.ogg");
             wheelbarrowItem.throwSFX = bundle.LoadAsset<AudioClip>(root + "Throw.ogg");
-            mls.LogDebug(wheelsNoise.Count);
             wheelsNoise.Add(bundle.TryLoadAudioClipAsset(root + "Wheelbarrow_Move_1.mp3"));
             wheelsNoise.Add(bundle.TryLoadAudioClipAsset(root + "Wheelbarrow_Move_2.ogg"));
             wheelsNoise.Add(bundle.TryLoadAudioClipAsset(root + "Wheelbarrow_Move_3.ogg"));
             wheelsNoise.Add(bundle.TryLoadAudioClipAsset(root + "Wheelbarrow_Move_4.ogg"));
-            mls.LogDebug(wheelsNoise.Count);
             wheelbarrowItem.highestSalePercentage = Config.HIGHEST_SALE_PERCENTAGE;
             wheelbarrowItem.itemName = WheelbarrowBehaviour.ITEM_NAME;
             wheelbarrowItem.itemSpawnsOnGround = true;
