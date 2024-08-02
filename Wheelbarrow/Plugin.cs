@@ -22,10 +22,9 @@ namespace Wheelbarrow
     {
         internal static readonly Harmony harmony = new(Metadata.GUID);
         internal static readonly ManualLogSource mls = BepInEx.Logging.Logger.CreateLogSource(Metadata.NAME);
-        internal static List<AudioClip> wheelsNoise = [];
+        internal static readonly List<AudioClip> wheelsNoise = [];
 
         public new static PluginConfig Config;
-        internal static GameObject networkPrefab;
 
         void Awake()
         {
