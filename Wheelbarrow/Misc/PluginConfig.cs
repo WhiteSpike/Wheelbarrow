@@ -26,6 +26,10 @@ namespace Wheelbarrow.Misc
         [field: SyncedEntryField] public SyncedEntry<float> MOVEMENT_SLOPPY { get; set; }
         [field: SyncedEntryField] public SyncedEntry<float> NOISE_RANGE { get; set; }
         [field: SyncedEntryField] public SyncedEntry<bool> PLAY_NOISE { get; set; }
+        [field: SyncedEntryField] public SyncedEntry<bool> SCRAP {  get; set; }
+        [field: SyncedEntryField] public SyncedEntry<int> MINIMUM_VALUE { get; set; }
+        [field: SyncedEntryField] public SyncedEntry<int> MAXIMUM_VALUE { get; set; }
+        [field: SyncedEntryField] public SyncedEntry<float> RARITY { get; set; }
         public PluginConfig(ConfigFile cfg) : base(Metadata.GUID)
         {
             string topSection = WheelbarrowBehaviour.ITEM_NAME;
@@ -45,6 +49,10 @@ namespace Wheelbarrow.Misc
             LOOK_SENSITIVITY_DRAWBACK = cfg.BindSyncedEntry(topSection, Constants.WHEELBARROW_LOOK_SENSITIVITY_DRAWBACK_KEY, Constants.WHEELBARROW_LOOK_SENSITIVITY_DRAWBACK_DEFAULT, Constants.WHEELBARROW_LOOK_SENSITIVITY_DRAWBACK_DESCRIPTION);
             MOVEMENT_SLOPPY = cfg.BindSyncedEntry(topSection, Constants.WHEELBARROW_MOVEMENT_SLOPPY_KEY, Constants.WHEELBARROW_MOVEMENT_SLOPPY_DEFAULT, Constants.WHEELBARROW_MOVEMENT_SLOPPY_DESCRIPTION);
             PLAY_NOISE = cfg.BindSyncedEntry(topSection, Constants.WHEELBARROW_PLAY_NOISE_KEY, Constants.WHEELBARROW_PLAY_NOISE_DEFAULT, Constants.WHEELBARROW_PLAY_NOISE_DESCRIPTION);
+            SCRAP = cfg.BindSyncedEntry(topSection, Constants.WHEELBARROW_SCRAP_KEY, Constants.WHEELBARROW_SCRAP_DEFAULT, Constants.WHEELBARROW_SCRAP_DESCRIPTION);
+            MINIMUM_VALUE = cfg.BindSyncedEntry(topSection, Constants.WHEELBARROW_MINIMUM_VALUE_KEY, Constants.WHEELBARROW_MINIMUM_VALUE_DEFAULT, Constants.WHEELBARROW_MINIMUM_VALUE_DESCRIPTION);
+            MAXIMUM_VALUE = cfg.BindSyncedEntry(topSection, Constants.WHEELBARROW_MAXIMUM_VALUE_KEY, Constants.WHEELBARROW_MAXIMUM_VALUE_DEFAULT, Constants.WHEELBARROW_MAXIMUM_VALUE_DESCRIPTION);
+            RARITY = cfg.BindSyncedEntry(topSection, Constants.WHEELBARROW_RARITY_KEY, Constants.WHEELBARROW_RARITY_DEFAULT, Constants.WHEELBARROW_RARITY_DESCRIPTION);
 
             ConfigManager.Register(this);
         }

@@ -45,6 +45,18 @@ namespace Wheelbarrow.Util
         internal const int WHEELBARROW_MAXIMUM_AMOUNT_ITEMS_DEFAULT = 4;
         internal const string WHEELBARROW_MAXIMUM_AMOUNT_ITEMS_DESCRIPTION = $"Amount of items allowed before the {WheelbarrowBehaviour.ITEM_NAME} is considered full";
 
+        internal const string WHEELBARROW_MINIMUM_VALUE_KEY = $"Minimum scrap value of {WheelbarrowBehaviour.ITEM_NAME}";
+        internal const int WHEELBARROW_MINIMUM_VALUE_DEFAULT = 50;
+        internal const string WHEELBARROW_MINIMUM_VALUE_DESCRIPTION = "Lower boundary of the scrap's possible value";
+
+        internal const string WHEELBARROW_RARITY_KEY = $"Spawn Chance of the {WheelbarrowBehaviour.ITEM_NAME} Item";
+        internal const float WHEELBARROW_RARITY_DEFAULT = 0.1f;
+        internal const string WHEELBARROW_RARITY_DESCRIPTION = $"How likely it is for a {WheelbarrowBehaviour.ITEM_NAME} item to spawn when landing on a moon. (0.1 = 10%)";
+
+        internal const string WHEELBARROW_MAXIMUM_VALUE_KEY = $"Maximum scrap value of {WheelbarrowBehaviour.ITEM_NAME}";
+        internal const int WHEELBARROW_MAXIMUM_VALUE_DEFAULT = 100;
+        internal const string WHEELBARROW_MAXIMUM_VALUE_DESCRIPTION = "Higher boundary of the scrap's possible value";
+
         internal const string WHEELBARROW_WEIGHT_REDUCTION_MULTIPLIER_KEY = $"Weight reduction multiplier for {WheelbarrowBehaviour.ITEM_NAME}";
         internal const float WHEELBARROW_WEIGHT_REDUCTION_MULTIPLIER_DEFAULT = 0.7f;
         internal const string WHEELBARROW_WEIGHT_REDUCTION_MUTLIPLIER_DESCRIPTION = $"How much an item's weight will be ignored to the {WheelbarrowBehaviour.ITEM_NAME}'s total weight";
@@ -64,6 +76,10 @@ namespace Wheelbarrow.Util
         internal const string WHEELBARROW_PLAY_NOISE_KEY = $"Plays noises for players with {WheelbarrowBehaviour.ITEM_NAME} Item";
         internal const bool WHEELBARROW_PLAY_NOISE_DEFAULT = true;
         internal const string WHEELBARROW_PLAY_NOISE_DESCRIPTION = "If false, it will just not play the sounds, it will still attract monsters to noise";
+
+        internal const string WHEELBARROW_SCRAP_KEY = $"Scrap Item";
+        internal const bool WHEELBARROW_SCRAP_DEFAULT = false;
+        internal const string WHEELBARROW_SCRAP_DESCRIPTION = "If true, it will be considered as a scrap item and spawn inside the facility. Otherwise, it will be bought from the store";
 
         internal const string DROP_ALL_ITEMS_WHEELBARROW_KEYBIND_NAME = "Drop all items from wheelbarrow";
         internal const string DROP_ALL_ITEMS_WHEELBARROW_DEFAULT_KEYBIND = "<Mouse>/middleButton";

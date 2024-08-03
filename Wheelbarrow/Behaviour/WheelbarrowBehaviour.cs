@@ -40,6 +40,11 @@ namespace Wheelbarrow.Behaviour
             lookSensitivityDrawback = config.LOOK_SENSITIVITY_DRAWBACK.Value;
             playSounds = config.PLAY_NOISE.Value;
             wheelsClip = Plugin.wheelsNoise.ToArray();
+            if (itemProperties.isScrap && scrapValue <= 0)
+            {
+                System.Random random = new System.Random(StartOfRound.Instance.randomMapSeed + 105);
+                SetScrapValue(random.Next(config.MINIMUM_VALUE.Value, config.MAXIMUM_VALUE.Value));
+            }
         }
 
         public override void Update()

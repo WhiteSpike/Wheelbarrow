@@ -11,6 +11,7 @@ using UnityEngine;
 using CustomItemBehaviourLibrary.Misc;
 using Wheelbarrow.Input;
 using Wheelbarrow.Compat;
+using LethalLib.Extras;
 namespace Wheelbarrow
 {
     [BepInPlugin(Metadata.GUID,Metadata.NAME,Metadata.VERSION)]
@@ -46,6 +47,9 @@ namespace Wheelbarrow
             wheelbarrowItem.positionOffset = new Vector3(0f, -0.7f, 1.4f);
             wheelbarrowItem.verticalOffset = 0.3f;
             wheelbarrowItem.weight = 0.99f + (Config.WEIGHT / 100f);
+            wheelbarrowItem.minValue = Config.MINIMUM_VALUE;
+            wheelbarrowItem.maxValue = Config.MAXIMUM_VALUE;
+            wheelbarrowItem.isScrap = Config.SCRAP;
             wheelbarrowItem.twoHanded = true;
             wheelbarrowItem.itemIcon = bundle.LoadAsset<Sprite>(root + "Icon.png");
             wheelbarrowItem.spawnPrefab = bundle.LoadAsset<GameObject>(root + "Wheelbarrow.prefab");
@@ -73,8 +77,24 @@ namespace Wheelbarrow
             Utilities.FixMixerGroups(wheelbarrowItem.spawnPrefab);
             NetworkPrefabs.RegisterNetworkPrefab(wheelbarrowItem.spawnPrefab);
 
-            TerminalNode infoNode = SetupInfoNode();
-            Items.RegisterShopItem(shopItem: wheelbarrowItem, itemInfo: infoNode, price: wheelbarrowItem.creditsWorth);
+            if (wheelbarrowItem.isScrap)
+            {
+                Items.RegisterItem(wheelbarrowItem);
+
+                AnimationCurve curve = new(new Keyframe(0, 0), new Keyframe(1f - Config.RARITY.Value, 1), new Keyframe(1, 1));
+                SpawnableMapObjectDef mapObjDef = ScriptableObject.CreateInstance<SpawnableMapObjectDef>();
+                mapObjDef.spawnableMapObject = new SpawnableMapObject
+                {
+                    prefabToSpawn = wheelbarrowItem.spawnPrefab
+                };
+                MapObjects.RegisterMapObject(mapObjDef, Levels.LevelTypes.All, (_) => curve);
+            }
+            else
+            {
+                TerminalNode infoNode = SetupInfoNode();
+                Items.RegisterShopItem(shopItem: wheelbarrowItem, itemInfo: infoNode, price: wheelbarrowItem.creditsWorth);
+            }
+
             InputUtilsCompat.Init();
             harmony.PatchAll(typeof(Keybinds));
 
