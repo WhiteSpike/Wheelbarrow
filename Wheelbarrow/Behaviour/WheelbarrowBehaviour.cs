@@ -45,6 +45,7 @@ namespace Wheelbarrow.Behaviour
                 System.Random random = new System.Random(StartOfRound.Instance.randomMapSeed + 105);
                 SetScrapValue(random.Next(config.MINIMUM_VALUE.Value, config.MAXIMUM_VALUE.Value));
             }
+            if (!KeepScanNode) Destroy(gameObject.GetComponentInChildren<ScanNodeProperties>());
         }
 
         public override void Update()
