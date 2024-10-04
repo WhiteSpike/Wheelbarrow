@@ -1,4 +1,5 @@
 ﻿using CustomItemBehaviourLibrary.AbstractItems;
+using GameNetcodeStuff;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Wheelbarrow.Input;
@@ -24,6 +25,12 @@ namespace Wheelbarrow.Behaviour
             return $"A portable container which has a maximum capacity of {Plugin.Config.MAXIMUM_AMOUNT_ITEMS.Value}" +
                 $" and reduces the effective weight of the inserted items by {Plugin.Config.WEIGHT_REDUCTION_MULTIPLIER.Value * 100} %.\n" +
                 $"It weighs {Plugin.Config.WEIGHT.Value} lbs";
+        }
+
+        protected override bool ShowDepositPrompts()
+        {
+            PlayerControllerB player = GameNetworkManager.Instance.localPlayerController;
+            return player.isHoldingObject && playerHeldBy != player;
         }
 
         public override void Start()
