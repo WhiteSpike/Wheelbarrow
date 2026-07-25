@@ -1,4 +1,5 @@
-﻿using CustomItemBehaviourLibrary.AbstractItems;
+﻿using System.Collections.Generic;
+using CustomItemBehaviourLibrary.AbstractItems;
 using GameNetcodeStuff;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,6 +11,9 @@ namespace Wheelbarrow.Behaviour
     internal class WheelbarrowBehaviour : ContainerBehaviour
     {
         private GameObject wheel;
+        private RoundManager _roundManager;
+        private bool _isLootRegistered;
+        private List<GrabbableObject> _itemsCache = new List<GrabbableObject>();
         internal const string ITEM_NAME = "Wheelbarrow";
         internal const string ITEM_DESCRIPTION = "Allows carrying multiple items";
         protected bool KeepScanNode
@@ -19,7 +23,7 @@ namespace Wheelbarrow.Behaviour
                 return Plugin.Config.SCAN_NODE;
             }
         }
-
+        
         public string GetDisplayInfo()
         {
             return $"A portable container which has a maximum capacity of {Plugin.Config.MAXIMUM_AMOUNT_ITEMS.Value}" +
@@ -34,9 +38,22 @@ namespace Wheelbarrow.Behaviour
         }
 
         public override void Start()
-        {
+        { 
             base.Start();
-            wheel = GameObject.Find("lgu_wheelbarrow_wheel");
+
+            Transform[] allChildren = GetComponentsInChildren<Transform>(true);
+            foreach (Transform children in allChildren)
+            {
+                if (children.name == "lgu_wheelbarrow_wheel")
+                {
+                    wheel = children.gameObject;
+                    break;
+                }
+            }
+
+            if (wheel == null) 
+                Plugin.mls.LogError($"[{ITEM_NAME}] Could not find wheel object!");
+            
             PluginConfig config = Plugin.Config;
             maximumAmountItems = config.MAXIMUM_AMOUNT_ITEMS.Value;
             weightReduceMultiplier = config.WEIGHT_REDUCTION_MULTIPLIER.Value;
@@ -47,6 +64,7 @@ namespace Wheelbarrow.Behaviour
             lookSensitivityDrawback = config.LOOK_SENSITIVITY_DRAWBACK.Value;
             playSounds = config.PLAY_NOISE.Value;
             wheelsClip = Plugin.wheelsNoise.ToArray();
+            _roundManager = RoundManager.Instance;
             if (itemProperties.isScrap && scrapValue <= 0)
             {
                 System.Random random = new System.Random(StartOfRound.Instance.randomMapSeed + 105);
@@ -57,9 +75,16 @@ namespace Wheelbarrow.Behaviour
 
         public override void Update()
         {
+            bool hasItems = inWheelBarrow();
+            
             base.Update();
+ 
+            if (hasItems && playerHeldBy != null && playerHeldBy.isInHangarShipRoom && !_isLootRegistered) RegistryInShip();            
+            
+            if (!hasItems || !isInShipRoom) _isLootRegistered = false;
+            
             if (!(isHeld && playerHeldBy.thisController.velocity.magnitude > 0f)) return;
-
+            
             wheel.transform.Rotate(Time.deltaTime, 0f, 0f, Space.Self);
             wheel.transform.rotation.Set(wheel.transform.rotation.x % 360, wheel.transform.rotation.y, wheel.transform.rotation.z, wheel.transform.rotation.w);
         }
@@ -75,6 +100,31 @@ namespace Wheelbarrow.Behaviour
         {
             string controlBind = IngameKeybinds.Instance.WheelbarrowKey.GetBindingDisplayString();
             return [$"Drop all items: [{controlBind}]"];
+        }
+        
+        
+        protected bool inWheelBarrow()
+        {
+            GetComponentsInChildren<GrabbableObject>(false, _itemsCache);
+
+            foreach (GrabbableObject component in _itemsCache)
+            {
+                if (component != null && component != this) return true;
+            }
+            
+            return false;
+        }
+        
+        protected void RegistryInShip()
+        {
+            GetComponentsInChildren<GrabbableObject>(false, _itemsCache);
+            foreach (GrabbableObject component in _itemsCache)
+            {
+                if (component == null || component == this) continue;
+                
+                _roundManager.CollectNewScrapForThisRound(component);
+            }
+            _isLootRegistered = true;
         }
     }
 }
